@@ -1,0 +1,35 @@
+--struts2概述：
+
+1.struts2框架应用javaee三层结构中的web程框架
+
+2.struts2框架在struts1和webwork基础上发展的全新的框架
+
+3.struts2解决的问题：
+
+传统：用户管理功能(crud操作)需要添加的时候就要 “添加servlet”
+修改的时候就要修改servlet
+
+如果功能很多，创建很多的servlet，造成维护特别不方便
+
+web阶段解决方案：创建BaseServlet解决 写到底层反射代码实现
+
+
+--action对比servlet
+
+1.每次访问servlet时，都会执行service方法
+-继承HttpServlet,重写类里面的方法
+-在web.xml中配置servlet访问路径
+
+2.每次访问action时，默认执行execute方法
+-配置action访问路径
+
+
+--配置action类访问路径
+
+1.创建struts2核心配置文件
+核心配置文件名称和位置是固定的
+位置必须在src下面，名称struts.xml
+
+2.引入dtd约束
+
+3.action配置
