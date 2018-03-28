@@ -1,0 +1,150 @@
+--hibernate 第一天
+1.web内容回顾
+（1）javaee三层结构
+（2）mvc思想
+
+2.hibernate概述
+
+3.hibernate入门案例
+
+4.hibernate配置文件
+
+5.hibernate的api使用
+
+
+--JavaEE三层结构
+1.web层：struts2框架
+2.service层：spring框架
+3.dao层：hibernate框架
+（1）对数据库进行crud操作
+
+
+--MVC思想
+1.m:模型
+2.v:视图
+3.c:控制器
+
+
+--hibernate概述
+1.hibernate框架应用在javaee三层结构中 dao层框架
+2.在dao层里面做对数据库crud操作，使用hibernate实现crud操作，hibernate底层代码就是jdbc，hibernate对jdbc进行封装，使用hibernate好处，不需要写复杂的jdbc代码，不需要写sql语句实现
+3.hibernate开源的轻量级的框架
+4.hibernate版本 hibernate 5.x
+
+
+--orm思想
+1.hibernate使用orm事项对数据库进行crud操作
+2.在web阶段学习javabean，更正确的叫法是 实体类
+3.orm object relation mapping，对象关系映射
+
+文字描述：
+（1）让实体类和数据库表进行一一对应关系
+让实体类首先和数据库表对应
+让实体类属性 和 表里面字段对应
+（2）不需要直接操作数据库，而操作表对应实体类对象
+
+jdbc代码：
+//加载驱动
+Class.forName("com.mysql.jdbc.Driver");
+//创建连接
+Connection conn = DriverManager.getConnection(url,username,password);
+//对sql进行预编译操作
+String sql = "select * from user";
+PreparedStatement psmt = conn.preparedStatement(sql);
+//执行sql查询sql
+ResultSet rs = psmt.executeQuery();
+//遍历结果集
+........
+//释放资源
+........
+
+
+--配置实体类和数据库表一一对应关系
+使用配置文件实现映射关系
+（1）创建xml格式的配置文件
+-映射配置文件名称和位置没有固定要求
+-建议：在实体类的所在包里面创建，实体类名称hbm.xml
+（2）配饰是xml格式，在配置文件中首先引入xml约束
+-学过约束dtd约束，schema，在hibernate里面引入的约束为dtd约束
+dtd文件所在位置：\hibernate-release-5.0.7.Final\project\hibernate-core\src\main\resources\org\hibernate
+（3）配置映射关系
+<hibernate-mapping>
+	<!-- 1配置类和表对应 
+		 class标签：实体类全路径
+		 table属性:数据库表名称
+	-->
+	<class name="cn.itcast.entity.User" table="t_user">
+		<!-- 2配置实体类id和表id对应
+			 hibernate要求实体类有一个属性唯一值
+			 hibernate要求表有字段作为唯一值
+		 -->
+		 <!-- id标签
+		 	  name属性：实体类里面id属性名称
+		 	  column属性：生成的表字段名称
+		  -->
+		  <id name="uid" column="uid">
+		  	<!-- 设置数据库表id增长策略
+		  		 native：生成表id值就是主键自动增长
+		  	 -->
+		  	 <generator class="native"></generator>
+		  </id>
+		  <!-- 配置其他的属性和表字段对应
+		  	   name属性：实体类属性名称
+		  	   column属性：生成表字段名称
+		   -->
+		   <property name="username" column="username"></property>
+		   <property name="password" column="password"></property>
+		   <property name="address" column="address"></property>
+		  
+	</class>
+</hibernate-mapping>
+（4）创建hibernate的核心配置文件（配置与那个数据库有关系）
+1）核心配置文件格式xml，但是核心配置文件名称和位置是固定的
+位置：必须在src下面
+名称：必须是hibernate.cfg.xml
+2）引入dtd约束（示例文件路径同上）
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+3）hibernate操作过程中只会加载核心配置文件，其他配置文件不会加载
+
+
+--代码步骤介绍
+第一步：加载hibernate核心配置文件
+
+第二步：创建SessionFactory对象
+
+第三步：使用SessionFactory创建session对象
+
+第四步：开启事务
+
+第五步：写具体逻辑 crud操作
+
+第六步：提交事务
+
+第七步：关闭资源
+
+
+--hibernate核心配置文件
+1.Configuration
+Configuration cfg = new Configuration();
+cfg.configure();
+（1）到src下面找到名称是hibernate.cfg.xml配置文件，创建对象，把配置文件放到对象里面（加载核心配置文件）
+
+2.SessionFactory（重点）
+1）使用configuration对象创建sessionFactory对象
+	-根据核心配置文件中的数据库配置，到数据库里面根据映射关系把表创建
+2）创建sessionFactory过程中，建议一个项目创建一个sessionFactory对象
+3）具体实现
+	-写工具类，写静态代码块实现
+	-静态代码块在加载时执行，执行一次
+
+3.Session（重点）
+1）session类似于jdbc中的connection
+2）调用session里面不同方法实现crud操作
+	-添加 save方法
+	-修改 update方法
+	-删除 delete方法
+	根据id查询 get方法
+3）session对象是单线程对象
+	-session对象不能共用，只能自己使用

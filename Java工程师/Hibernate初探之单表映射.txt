@@ -26,7 +26,7 @@ session与connection,是多对一关系，每个session都有一个与之对应�
 
 
 --transaction简介
-hibernate对数据的操作都是封装在食物当中，并且默认是非自动提交的方式。所以用session保存对象时，如果不开启事务，并且手工提交事务，对象并不会真正保存在数据库中
+hibernate对数据的操作都是封装在事务当中，并且默认是非自动提交的方式。所以用session保存对象时，如果不开启事务，并且手工提交事务，对象并不会真正保存在数据库中
 
 如果想让hibernate向jdbc那样自动提交事务，必须调用session对象的doWork()方法，获得jdbc的connection后，设置其为自动提交事务模式(注意：通常并不推荐这样做)
 
