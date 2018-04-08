@@ -299,4 +299,4 @@ public static Session getSessionobject() {
 2.实现过程
 （1）创建对象
 （2）调用对象的方法得到结果，返回list集合每部分是数组形式
-（3）也可以使其返回结果是对象的形式，可以调用SQLQuery对象的addEntity方法。返回的结果就是对象，可以向上面两个一样直接输出
+（3）也可以使其返回结果是对象的形式，可以调用SQLQuery对象的addEntity方法。返回的结果就是对象，可以像上面两个一样直接输出
