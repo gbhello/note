@@ -1,0 +1,6 @@
+spring的注解复习
+controller
+struts2的配置文件全部改为用注解方式实现
+DetachedCriteria的使用
+模型驱动的getmodel方法的形式 使用的方法
+hql语句的使用（BaseDictDaoImpl）：.find("from BaseDict where dictTypeCode = ?", typeCode);
